@@ -1,6 +1,6 @@
 {
     "name": "rollup-plugin-watcher",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Dynamically add additional files for watching",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -12,8 +12,9 @@
     },
     "keywords": [
         "rollup",
-        "search",
-        "replace",
+        "watch",
+        "scss",
+        "partials",
         "plugin"
     ],
     "author": "Vladimir Iliev <vldiliev@gmail.com>",

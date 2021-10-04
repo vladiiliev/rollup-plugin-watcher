@@ -1,31 +1,20 @@
-import replace, { ReplaceInFileConfig } from 'replace-in-file';
+import glob from 'glob';
+import { Plugin } from 'rollup';
+import { resolve } from 'path';
 
-interface ReplaceInFileOptions extends ReplaceInFileConfig {
-    verbose?: boolean;
-}
-
-function searchAndReplace(options: { entry: ReplaceInFileOptions; hook?: string }) {
-    const {
-        entry = {
-            files: '',
-            from: '',
-            to: ''
-        },
-        hook = 'closeBundle'
-    } = options;
-
+function watcher(globs: string[]): Plugin {
     return {
-        name: 'search-and-replace',
-        [hook]: () => {
-            try {
-                const results = replace.sync(entry);
-
-                entry.verbose && console.info('Replacement results:', results);
-            } catch (error) {
-                console.error('Error occurred:', error);
+        name: 'watcher',
+        transform() {
+            for (const item of globs) {
+                glob.sync(resolve(item)).forEach((filename) => {
+                    this.addWatchFile(filename);
+                });
             }
+
+            return null;
         }
     };
 }
 
-export default searchAndReplace;
+export default watcher;
